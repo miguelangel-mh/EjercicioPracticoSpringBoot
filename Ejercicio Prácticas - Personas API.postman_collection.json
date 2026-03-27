@@ -1,0 +1,344 @@
+{
+  "info": {
+    "_postman_id": "ff8df652-4333-4330-ba11-6c10aaecbbf2",
+    "name": "Ejercicio Prácticas - Personas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52939273",
+    "_collection_link": "https://go.postman.co/collection/52939273-ff8df652-4333-4330-ba11-6c10aaecbbf2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Casos Correctos",
+      "item": [
+        {
+          "name": "POST - Crear Persona",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear Persona 2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Manuel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678B\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Todas las Personas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Persona por DNI",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678A",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678A"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Actualizar Persona",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678A",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678A"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar Persona",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/personas/12345678B",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678B"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar Todas la Personas",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Casos Erróneos",
+      "item": [
+        {
+          "name": "GET - Mostrar Persona Inexistente",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678P",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678P"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear Persona Erróneo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear Persona con Dni Existente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Juan\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Actualizar Persona Inexistente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678W",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678W"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Actualizar con Falta de Datos",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678A",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678A"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar Persona Inexistente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/personas/12345678P",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "personas",
+                "12345678P"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
