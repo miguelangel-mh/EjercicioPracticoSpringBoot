@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${editMode} ? 'Modificar persona' : 'Crear persona'">Formulario persona</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="page-shell">
+    <div class="page-header form-header">
+        <div>
+            <p class="eyebrow" th:text="${editMode} ? 'Edición' : 'Alta'"></p>
+            <h1 th:text="${editMode} ? 'Modificar persona' : 'Crear persona'"></h1>
+            <p class="subtitle">
+                Completa la información personal y de contacto para guardar los cambios.
+            </p>
+        </div>
+    </div>
+
+    <div class="card form-card">
+        <form th:object="${personForm}"
+              th:action="${editMode} ? @{/personas-view/update/{dni}(dni=${currentDni})} : @{/personas-view}"
+              method="post">
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dni">DNI</label>
+                    <input id="dni"
+                           type="text"
+                           th:field="*{dni}"
+                           th:readonly="${editMode}" />
+                    <small class="field-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input id="name" type="text" th:field="*{name}" />
+                    <small class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Apellido</label>
+                    <input id="lastName" type="text" th:field="*{lastName}" />
+                    <small class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Teléfono</label>
+                    <input id="telephone" type="number" th:field="*{telephone}" />
+                    <small class="field-error" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></small>
+                </div>
+
+                <div class="form-group form-group-full">
+                    <label for="street">Calle</label>
+                    <input id="street" type="text" th:field="*{street}" />
+                </div>
+
+                <div class="form-group form-group-full">
+                    <label for="email">Email</label>
+                    <input id="email" type="text" th:field="*{email}" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a class="btn btn-secondary" th:href="@{/personas-view}">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

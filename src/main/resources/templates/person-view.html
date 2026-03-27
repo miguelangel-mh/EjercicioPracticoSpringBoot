@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Personas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="page-shell">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">Gestión de personas</p>
+            <h1>Listado de Personas</h1>
+            <p class="subtitle">Consulta, modifica, elimina o añade registros desde esta vista.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-primary" th:href="@{/personas-view/new}">
+                Añadir persona
+            </a>
+
+            <form th:action="@{/personas-view/delete-all}" method="post">
+                <button type="submit" class="btn btn-danger">
+                    Borrar todos
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card table-card">
+        <div class="table-responsive">
+            <table class="modern-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nombre completo</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Calle</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="person : ${persons}">
+                    <td th:text="${person.idPerson}"></td>
+                    <td th:text="${person.name}"></td>
+                    <td th:text="${person.lastName}"></td>
+                    <td th:text="${person.fullName}"></td>
+                    <td>
+                        <span class="badge" th:text="${person.dni}"></span>
+                    </td>
+                    <td th:text="${person.contactDetails.telephone}"></td>
+                    <td th:text="${person.contactDetails.street}"></td>
+                    <td th:text="${person.contactDetails.email}"></td>
+                    <td>
+                        <div class="row-actions">
+                            <a class="btn btn-secondary"
+                               th:href="@{/personas-view/edit/{dni}(dni=${person.dni})}">
+                                Modificar
+                            </a>
+
+                            <form th:action="@{/personas-view/delete/{dni}(dni=${person.dni})}" method="post">
+                                <button type="submit" class="btn btn-danger-outline">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(persons)}">
+                    <td colspan="9">
+                        <div class="empty-state">
+                            <p>No hay personas registradas todavía.</p>
+                            <a class="btn btn-primary" th:href="@{/personas-view/new}">
+                                Crear primera persona
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

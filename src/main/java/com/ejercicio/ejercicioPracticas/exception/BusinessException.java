@@ -1,0 +1,9 @@
+package com.ejercicio.ejercicioPracticas.exception;
+
+public class BusinessException extends RuntimeException{
+
+    public BusinessException(String message){
+        super(message);
+    }
+
+}
