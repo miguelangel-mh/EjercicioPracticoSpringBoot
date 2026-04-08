@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * DTO que representa los datos de contacto asociados a una persona.
+ */
 @Schema(description = "Detalles del contacto de una persona")
 public class ContactDetailsDto implements Serializable {
 

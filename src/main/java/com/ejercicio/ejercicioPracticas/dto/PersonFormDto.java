@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * DTO que representa el formulario de entrada de datos de una persona
+ */
 public class PersonFormDto implements Serializable {
 
     @Serial

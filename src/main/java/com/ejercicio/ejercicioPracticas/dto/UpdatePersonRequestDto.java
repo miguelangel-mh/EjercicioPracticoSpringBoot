@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * DTO de entrada utilizado para actualizar una nueva persona.
+ */
 @Schema(description = "DTO de entrada para actualizar persona")
 public class UpdatePersonRequestDto implements Serializable {
 
