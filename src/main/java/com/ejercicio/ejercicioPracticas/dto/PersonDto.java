@@ -1,5 +1,6 @@
 package com.ejercicio.ejercicioPracticas.dto;
 
+import com.ejercicio.ejercicioPracticas.validate.ValidDni;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serial;
@@ -27,6 +28,7 @@ public class PersonDto implements Serializable {
     private String fullName;
 
     @Schema(description = "DNI de la persona", example = "12345678A")
+    @ValidDni
     private String dni;
 
     @Schema(description = "Contacto de la persona")

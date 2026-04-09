@@ -1,6 +1,7 @@
 package com.ejercicio.ejercicioPracticas.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,7 @@ public class ContactDetailsDto implements Serializable {
     private String street;
 
     @Schema(description = "Correo", example = "mmherrera@gmail.com")
+    @Email(message = "El email no tiene un formato válido")
     private String email;
 
     public ContactDetailsDto() {

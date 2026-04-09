@@ -1,5 +1,6 @@
 package com.ejercicio.ejercicioPracticas.dto;
 
+import com.ejercicio.ejercicioPracticas.validate.ValidDni;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,7 @@ public class CreatePersonRequestDto implements Serializable {
 
     @Schema(description = "DNI de la persona", example = "12345678A")
     @NotBlank(message = "El DNI es obligatorio")
+    @ValidDni
     private String dni;
 
     @Schema(description = "Contacto de la persona")

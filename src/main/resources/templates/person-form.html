@@ -59,6 +59,7 @@
                 <div class="form-group form-group-full">
                     <label for="email">Email</label>
                     <input id="email" type="text" th:field="*{email}" />
+                    <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                 </div>
             </div>
 

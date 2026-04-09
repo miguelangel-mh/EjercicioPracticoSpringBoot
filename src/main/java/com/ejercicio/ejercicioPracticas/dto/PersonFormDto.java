@@ -1,5 +1,6 @@
 package com.ejercicio.ejercicioPracticas.dto;
 
+import com.ejercicio.ejercicioPracticas.validate.ValidDni;
 import jakarta.validation.constraints.*;
 
 import java.io.Serial;
@@ -14,6 +15,7 @@ public class PersonFormDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank(message = "El DNI es obligatorio")
+    @ValidDni
     private String dni;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -27,6 +29,8 @@ public class PersonFormDto implements Serializable {
     @Max(value = 999999999, message = "El teléfono debe tener 9 dígitos")
     private Integer telephone;
     private String street;
+
+    @Email(message = "El email no tiene un formato válido")
     private String email;
 
     public PersonFormDto() {

@@ -21,17 +21,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementación de la lógica de negocio encargada de gestionar las operaciones
+ * relacionadas con personas y sus datos de contacto.
+ */
 @Service
 public class PersonBusinessImpl implements PersonBusiness{
 
     private final IPersonRepository personRepository ;
     private final IContactRepository contactRepository ;
 
+    /**
+     * Constructor de la clase de negocio de personas.
+     *
+     * @param personRepository repositorio encargado de las operaciones sobre personas.
+     * @param contactRepository repositorio encargado de las operaciones sobre contactos.
+     */
     public PersonBusinessImpl(IPersonRepository personRepository, IContactRepository contactRepository){
         this.personRepository = personRepository ;
         this.contactRepository = contactRepository ;
     }
 
+    /**
+     * Obtiene todas las personas registradas junto con sus datos de contacto.
+     *
+     * @return lista de personas en formato DTO.
+     */
     @Override
     @Transactional(readOnly = true)
     public List<PersonDto> findAllPersons(){
@@ -51,6 +66,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return personDtos ;
     }
 
+    /**
+     * Busca una persona a partir de su DNI y devuelve sus datos junto con el contacto asociado.
+     *
+     * @param dni DNI de la persona a buscar.
+     * @return un {@link Optional} con la persona encontrada, o vacío si no existe
+     * o no dispone de contacto asociado.
+     */
     @Override
     @Transactional(readOnly = true)
     public Optional<PersonDto> findPersonByDni(String dni) {
@@ -71,6 +93,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return Optional.empty();
     }
 
+    /**
+     * Crea una nueva persona y sus datos de contacto asociados.
+     *
+     * @param requestDto datos necesarios para crear la persona.
+     * @return la persona creada en formato DTO.
+     * @throws BusinessException si el DNI ya existe o si se produce un error durante el mapeo.
+     */
     @Override
     @Transactional
     public PersonDto createPerson(CreatePersonRequestDto requestDto) {
@@ -83,6 +112,14 @@ public class PersonBusinessImpl implements PersonBusiness{
                 .orElseThrow(() -> new BusinessException("Error creando a la persona"));
     }
 
+    /**
+     * Actualiza los datos de una persona existente y de su contacto asociado a partir del DNI.
+     *
+     * @param dni DNI de la persona a actualizar.
+     * @param requestDto nuevos datos de la persona.
+     * @return un {@link Optional} con la persona actualizada en formato DTO.
+     * @throws BusinessException si la persona o el contacto no existen.
+     */
     @Override
     @Transactional
     public Optional<PersonDto> updatePersonByDni(String dni, UpdatePersonRequestDto requestDto) {
@@ -106,6 +143,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return PersonMapper.toPersonDto(savedPerson, savedContact);
     }
 
+    /**
+     * Elimina una persona y su contacto asociado a partir del DNI.
+     *
+     * @param dni DNI de la persona a eliminar.
+     * @return {@code true} si la eliminación se realiza correctamente.
+     * @throws BusinessException si la persona no existe.
+     */
     @Override
     @Transactional
     public boolean deletePersonByDni(String dni) {
@@ -118,6 +162,9 @@ public class PersonBusinessImpl implements PersonBusiness{
         return true;
     }
 
+    /**
+     * Elimina todas las personas registradas y todos sus contactos.
+     */
     @Override
     @Transactional
     public void deleteAllPersons() {
@@ -128,6 +175,12 @@ public class PersonBusinessImpl implements PersonBusiness{
 
     // Métodos auxiliares
 
+    /**
+     * Crea y guarda una nueva entidad de persona a partir de los datos recibidos.
+     *
+     * @param requestDto datos de la persona a crear.
+     * @return la entidad persona guardada.
+     */
     private PersonEntity saveNewPerson(final CreatePersonRequestDto requestDto) {
         PersonEntity personEntity = new PersonEntity();
         personEntity.setName(requestDto.getName());
@@ -137,6 +190,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return personRepository.save(personEntity);
     }
 
+    /**
+     * Crea y guarda una nueva entidad de contacto asociada a una persona.
+     *
+     * @param savedPerson persona previamente guardada.
+     * @param contactDetailsDto datos de contacto a guardar.
+     * @return la entidad contacto guardada.
+     */
     private ContactEntity saveNewContact(final PersonEntity savedPerson, final ContactDetailsDto contactDetailsDto) {
 
         ContactEntity contactEntity = new ContactEntity();
@@ -149,6 +209,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return contactRepository.save(contactEntity);
     }
 
+    /**
+     * Actualiza los datos básicos de una persona existente.
+     *
+     * @param personEntityDb entidad persona recuperada de base de datos.
+     * @param requestDto nuevos datos personales.
+     * @return la entidad persona actualizada y guardada.
+     */
     private PersonEntity updatePersonEntity(final PersonEntity personEntityDb, final UpdatePersonRequestDto requestDto) {
 
         personEntityDb.setName(requestDto.getName());
@@ -157,6 +224,13 @@ public class PersonBusinessImpl implements PersonBusiness{
         return personRepository.save(personEntityDb);
     }
 
+    /**
+     * Actualiza los datos de contacto de una persona existente.
+     *
+     * @param contactEntityDb entidad contacto recuperada de base de datos.
+     * @param contactDetailsDto nuevos datos de contacto.
+     * @return la entidad contacto actualizada y guardada.
+     */
     private ContactEntity updateContactEntity(final ContactEntity contactEntityDb, final ContactDetailsDto contactDetailsDto) {
 
         contactEntityDb.setTelephone(contactDetailsDto.getTelephone());
