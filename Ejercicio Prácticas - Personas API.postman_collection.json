@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678Z\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -44,7 +44,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Manuel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678B\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}",
+              "raw": "{\r\n  \"name\": \"Manuel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345679S\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -102,14 +102,14 @@
               "raw": "{\r\n  \"name\": \"Miguel\",\r\n  \"lastName\": \"Martínez\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
             },
             "url": {
-              "raw": "localhost:8080/personas/12345678A",
+              "raw": "localhost:8080/personas/12345678Z",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "personas",
-                "12345678A"
+                "12345678Z"
               ]
             }
           },
@@ -130,14 +130,14 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/personas/12345678A",
+              "raw": "localhost:8080/personas/12345678Z",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "personas",
-                "12345678A"
+                "12345678Z"
               ]
             }
           },
@@ -149,14 +149,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:8080/personas/12345678B",
+              "raw": "localhost:8080/personas/12345678Z",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "personas",
-                "12345678B"
+                "12345678Z"
               ]
             }
           },
@@ -216,7 +216,7 @@
           "response": []
         },
         {
-          "name": "POST - Crear Persona Erróneo",
+          "name": "POST - Crear Persona Falta Datos",
           "request": {
             "method": "POST",
             "header": [],
@@ -243,13 +243,18 @@
           "response": []
         },
         {
-          "name": "POST - Crear Persona con Dni Existente",
+          "name": "POST - Crear Persona Dni Incorrecto",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Juan\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}"
+              "raw": "{\r\n  \"name\": \"Juan\",\r\n  \"lastName\": \"Martínez\",\r\n  \"dni\": \"12345678A\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"manuel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "localhost:8080/personas",
@@ -299,7 +304,12 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}"
+              "raw": "{\r\n  \"name\": \"Pedro\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 612345678,\r\n    \"street\": \"Calle Sol 12\",\r\n    \"email\": \"miguel@email.com\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "localhost:8080/personas/12345678A",
