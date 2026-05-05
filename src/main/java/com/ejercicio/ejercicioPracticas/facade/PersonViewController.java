@@ -56,7 +56,7 @@ public class PersonViewController {
         Optional<PersonDto> personDtoOptional = personBusiness.findPersonByDni(dni);
 
         if (personDtoOptional.isEmpty()) {
-            return "redirect:/person-view";
+            return "redirect:/personas-view";
         }
 
         PersonFormDto personFormDto = buildPersonForm(personDtoOptional.orElseThrow());

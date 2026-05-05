@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Listado de Personas</title>
@@ -8,23 +9,76 @@
 <body>
 
 <div class="page-shell">
-    <div class="page-header">
-        <div>
+
+    <!-- Cabecera principal -->
+    <div class="main-header">
+        <div class="main-header-left">
             <p class="eyebrow">Gestión de personas</p>
             <h1>Listado de Personas</h1>
             <p class="subtitle">Consulta, modifica, elimina o añade registros desde esta vista.</p>
         </div>
-        <div class="header-actions">
-            <a class="btn btn-primary" th:href="@{/personas-view/new}">
-                Añadir persona
-            </a>
 
-            <form th:action="@{/personas-view/delete-all}" method="post">
-                <button type="submit" class="btn btn-danger">
-                    Borrar todos
+        <div class="main-header-right">
+            <!-- Si NO está logueado -->
+            <button sec:authorize="!isAuthenticated()"
+                    type="button"
+                    class="btn btn-login"
+                    onclick="openLoginModal()">
+                Iniciar sesión
+            </button>
+
+            <!-- Si SÍ está logueado -->
+            <form sec:authorize="isAuthenticated()"
+                  th:action="@{/logout}"
+                  method="post">
+                <button type="submit" class="btn btn-logout">
+                    Cerrar sesión
                 </button>
             </form>
         </div>
+    </div>
+
+    <!-- Botones de acciones -->
+    <div class="table-actions">
+        <!-- Añadir persona: logueado -->
+        <a sec:authorize="isAuthenticated()"
+           class="btn btn-primary"
+           th:href="@{/personas-view/new}">
+            Añadir persona
+        </a>
+
+        <!-- Añadir persona: no logueado -->
+        <button sec:authorize="!isAuthenticated()"
+                type="button"
+                class="btn btn-disabled-auth"
+                onclick="showLoginRequiredMessage()">
+            Añadir persona
+        </button>
+
+        <!-- Borrar todos: solo ADMIN -->
+        <form sec:authorize="hasRole('ADMIN')"
+              th:action="@{/personas-view/delete-all}"
+              method="post">
+            <button type="submit" class="btn btn-danger">
+                Borrar todos
+            </button>
+        </form>
+
+        <!-- Borrar todos: logueado pero NO admin -->
+        <button sec:authorize="isAuthenticated() and !hasRole('ADMIN')"
+                type="button"
+                class="btn btn-disabled-auth"
+                onclick="showAdminRequiredMessage()">
+            Borrar todos
+        </button>
+
+        <!-- Borrar todos: no logueado -->
+        <button sec:authorize="!isAuthenticated()"
+                type="button"
+                class="btn btn-disabled-auth"
+                onclick="showLoginRequiredMessage()">
+            Borrar todos
+        </button>
     </div>
 
     <div class="card table-card">
@@ -57,16 +111,46 @@
                     <td th:text="${person.contactDetails.email}"></td>
                     <td>
                         <div class="row-actions">
-                            <a class="btn btn-secondary"
+
+                            <!-- Modificar: logueado -->
+                            <a sec:authorize="isAuthenticated()"
+                               class="btn btn-secondary"
                                th:href="@{/personas-view/edit/{dni}(dni=${person.dni})}">
                                 Modificar
                             </a>
 
-                            <form th:action="@{/personas-view/delete/{dni}(dni=${person.dni})}" method="post">
+                            <!-- Modificar: no logueado -->
+                            <button sec:authorize="!isAuthenticated()"
+                                    type="button"
+                                    class="btn btn-disabled-auth"
+                                    onclick="showLoginRequiredMessage()">
+                                Modificar
+                            </button>
+
+                            <!-- Eliminar: solo ADMIN -->
+                            <form sec:authorize="hasRole('ADMIN')"
+                                  th:action="@{/personas-view/delete/{dni}(dni=${person.dni})}"
+                                  method="post">
                                 <button type="submit" class="btn btn-danger-outline">
                                     Eliminar
                                 </button>
                             </form>
+
+                            <!-- Eliminar: logueado pero NO admin -->
+                            <button sec:authorize="isAuthenticated() and !hasRole('ADMIN')"
+                                    type="button"
+                                    class="btn btn-disabled-auth"
+                                    onclick="showAdminRequiredMessage()">
+                                Eliminar
+                            </button>
+
+                            <!-- Eliminar: no logueado -->
+                            <button sec:authorize="!isAuthenticated()"
+                                    type="button"
+                                    class="btn btn-disabled-auth"
+                                    onclick="showLoginRequiredMessage()">
+                                Eliminar
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -75,9 +159,21 @@
                     <td colspan="9">
                         <div class="empty-state">
                             <p>No hay personas registradas todavía.</p>
-                            <a class="btn btn-primary" th:href="@{/personas-view/new}">
+
+                            <!-- Crear primera persona: logueado -->
+                            <a sec:authorize="isAuthenticated()"
+                               class="btn btn-primary"
+                               th:href="@{/personas-view/new}">
                                 Crear primera persona
                             </a>
+
+                            <!-- Crear primera persona: no logueado -->
+                            <button sec:authorize="!isAuthenticated()"
+                                    type="button"
+                                    class="btn btn-disabled-auth"
+                                    onclick="showLoginRequiredMessage()">
+                                Crear primera persona
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -86,6 +182,182 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de login -->
+<div id="loginModal" class="modal-overlay">
+    <div class="modal-content">
+
+        <button type="button"
+                class="modal-close"
+                onclick="closeLoginModal()">
+            ×
+        </button>
+
+        <h2>Iniciar sesión</h2>
+
+        <div th:if="${param.loginError}" class="alert-error modal-error">
+            Usuario o contraseña incorrectos.
+        </div>
+
+        <div th:if="${param.registered}" class="alert-success modal-error">
+            Usuario registrado correctamente. Ya puedes iniciar sesión.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input id="username"
+                       type="text"
+                       name="username"
+                       placeholder="Introduce tu usuario"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input id="password"
+                       type="password"
+                       name="password"
+                       placeholder="Introduce tu contraseña"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+                Entrar
+            </button>
+        </form>
+
+        <p class="register-text">
+            ¿No tienes cuenta?
+            <a href="#" onclick="switchToRegisterModal(); return false;">Registrarse</a>
+        </p>
+
+    </div>
+</div>
+
+<!-- Modal de registro -->
+<div id="registerModal" class="modal-overlay">
+    <div class="modal-content">
+
+        <button type="button"
+                class="modal-close"
+                onclick="closeRegisterModal()">
+            ×
+        </button>
+
+        <h2>Crear cuenta</h2>
+
+        <div th:if="${param.registerError}" class="alert-error modal-error">
+            No se ha podido crear la cuenta. Revisa los datos.
+        </div>
+
+        <form th:action="@{/register}" method="post">
+            <div class="form-group">
+                <label for="registerUsername">Usuario</label>
+                <input id="registerUsername"
+                       type="text"
+                       name="username"
+                       placeholder="Introduce un usuario"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="registerPassword">Contraseña</label>
+                <input id="registerPassword"
+                       type="password"
+                       name="password"
+                       placeholder="Introduce una contraseña"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="repeatPassword">Repetir contraseña</label>
+                <input id="repeatPassword"
+                       type="password"
+                       name="repeatPassword"
+                       placeholder="Repite la contraseña"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+                Registrarse
+            </button>
+        </form>
+
+        <p class="register-text">
+            ¿Ya tienes cuenta?
+            <a href="#" onclick="switchToLoginModal(); return false;">Iniciar sesión</a>
+        </p>
+
+    </div>
+</div>
+
+<script>
+    function openLoginModal() {
+        document.getElementById("loginModal").style.display = "flex";
+    }
+
+    function closeLoginModal() {
+        document.getElementById("loginModal").style.display = "none";
+    }
+
+    function openRegisterModal() {
+        document.getElementById("registerModal").style.display = "flex";
+    }
+
+    function closeRegisterModal() {
+        document.getElementById("registerModal").style.display = "none";
+    }
+
+    function switchToRegisterModal() {
+        closeLoginModal();
+        openRegisterModal();
+    }
+
+    function switchToLoginModal() {
+        closeRegisterModal();
+        openLoginModal();
+    }
+
+    function showLoginRequiredMessage() {
+        alert("Debes iniciar sesión para realizar esta acción.");
+    }
+
+    function showAdminRequiredMessage() {
+        alert("Solo un administrador puede borrar personas.");
+    }
+
+    window.onclick = function(event) {
+        const loginModal = document.getElementById("loginModal");
+        const registerModal = document.getElementById("registerModal");
+
+        if (event.target === loginModal) {
+            closeLoginModal();
+        }
+
+        if (event.target === registerModal) {
+            closeRegisterModal();
+        }
+    }
+</script>
+
+<script th:if="${param.loginError}">
+    window.addEventListener("DOMContentLoaded", function() {
+        openLoginModal();
+    });
+</script>
+
+<script th:if="${param.registerError}">
+    window.addEventListener("DOMContentLoaded", function() {
+        openRegisterModal();
+    });
+</script>
+
+<script th:if="${param.registered}">
+    window.addEventListener("DOMContentLoaded", function() {
+        openLoginModal();
+    });
+</script>
 
 </body>
 </html>
